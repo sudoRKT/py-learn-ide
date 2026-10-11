@@ -1,47 +1,539 @@
-/* Design tokens (SPEC section 11). Every colour in the interface comes from here.
-   PLACEHOLDER: the UI agent replaces this file with the full token set. */
+/* Design tokens (SPEC section 11).
+
+   EVERY colour in the interface is defined in this file and nowhere else
+   (src/renderer/src/lib/noColours.test.ts fails the build if a colour appears in any other
+   CSS or TSX file). Components use the semantic tokens in part 2; the raw accent values in
+   part 3 exist only to feed them.
+
+   What switches the tokens (attributes on <html>, set by state/settings.ts):
+     data-theme="light|dark"     the resolved theme ("system" is resolved in JavaScript)
+     data-contrast="high"        the high-contrast modifier, on top of either theme
+     data-accent="blue|teal|green|purple|pink|orange"   ACCENT_KEYS in src/shared/constants.ts
+     data-motion="reduced"       turns transitions and animations off
+     --ui-scale                  interface scale (0.8 to 1.5); every size below is in rem
+
+   Rules for this file, so that lib/contrast.ts can read it in the unit tests:
+     - selectors are only :root and [data-x='y'] combinations
+     - colours are hex (#rrggbb or #rrggbbaa), var(--other-token) or
+       color-mix(in srgb, A n%, B)
+*/
+
+/* ------------------------------------------------------------------ 1. scale, type, shape */
+
+:root {
+  --ui-scale: 1;
+
+  /* Type. System fonts only: nothing is fetched from the network. */
+  --font-ui: 'Segoe UI Variable Text', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Segoe UI Variable Display', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-code: 'Cascadia Code', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+
+  --text-xs: 0.75rem;     /* 12  captions, badges */
+  --text-sm: 0.8125rem;   /* 13  secondary text, dense controls */
+  --text-md: 0.875rem;    /* 14  the interface default */
+  --text-prose: 0.9375rem;/* 15  lesson text, tutor messages */
+  --text-lg: 1rem;        /* 16  panel titles */
+  --text-xl: 1.25rem;     /* 20  lesson title */
+  --text-2xl: 1.5rem;     /* 24  screen titles */
+  --text-3xl: 2rem;       /* 32  hero moments */
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.45;
+  --leading-relaxed: 1.6;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  --tracking-tight: -0.01em;
+  --tracking-display: -0.02em;
+
+  /* Space: a 4 px grid. */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Shape. Bigger things get bigger corners: chips < controls < cards < panels < dialogs. */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
+
+  /* Sizes of standard parts. */
+  --control-sm: 1.75rem;
+  --control-md: 2.125rem;
+  --control-lg: 2.625rem;
+  --icon-sm: 0.875rem;
+  --icon-md: 1rem;
+  --icon-lg: 1.25rem;
+  --topbar-height: 3.25rem;
+  --panel-gap: 0.5rem;
+  --panel-header-height: 2.625rem;
+  --rail-width: 2.75rem;
+  --focus-width: 2px;
+  --border-width: 1px;
+
+  /* Layers. Dialogs, menus, tooltips and toasts use the browser's top layer and need none. */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-splitter: 30;
+  --z-overlay: 100;
+
+  /* Motion. */
+  --duration-fast: 120ms;
+  --duration: 160ms;
+  --duration-slow: 200ms;
+  --duration-moment: 600ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+[data-motion='reduced'] {
+  --duration-fast: 0.01ms;
+  --duration: 0.01ms;
+  --duration-slow: 0.01ms;
+  --duration-moment: 0.01ms;
+}
+
+/* ------------------------------------------------------------------ 2. colour: light theme */
 
 :root {
   color-scheme: light;
-  --colour-bg: #f5f6f8;
-  --colour-surface: #ffffff;
-  --colour-border: #d9dde3;
-  --colour-text: #1c2026;
-  --colour-text-muted: #5b6470;
-  --colour-accent: #2f5fd0;
-  --colour-accent-text: #ffffff;
-  --colour-danger: #b3261e;
-  --colour-console-bg: #fbfbfc;
-  --radius: 10px;
-  --space: 12px;
-  --font-ui: system-ui, 'Segoe UI', sans-serif;
-  --font-code: 'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  /* Raw accent (blue is the default; part 3 swaps these). */
+  --a-solid: #2a5bd7;
+  --a-hover: #224dc0;
+  --a-active: #1c42a8;
+  --a-soft: #e8eefc;
+  --a-soft-hover: #d9e3fa;
+  --a-border: #a9bdf0;
+
+  /* Surfaces: panels float on a slightly tinted app background. */
+  --bg-app: #eceef3;
+  --surface-1: #ffffff;         /* panels */
+  --surface-2: #f5f6f9;         /* quiet fills inside a panel: headers, code, inputs */
+  --surface-3: #e9ecf2;         /* hover and pressed fills, tracks */
+  --surface-raised: #ffffff;    /* menus, dialogs, toasts */
+  --surface-inverse: #23272f;   /* tooltips */
+  --scrim: #10182866;           /* behind dialogs */
+
+  /* Lines. */
+  --border-subtle: #e3e6ec;     /* dividers inside panels */
+  --border: #cfd4dd;            /* outlines of cards and quiet controls */
+  --border-strong: #7f8899;     /* outlines that must be seen: inputs, checkboxes (3:1) */
+
+  /* Text. */
+  --text: #1a1d24;
+  --text-secondary: #4a5262;
+  --text-muted: #5e687a;
+  --text-disabled: #9aa2b1;
+  --text-inverse: #f4f5f8;
+
+  /* Accent, derived from the raw accent. */
+  --accent: var(--a-solid);
+  --accent-hover: var(--a-hover);
+  --accent-active: var(--a-active);
+  --on-accent: #ffffff;
+  --accent-text: var(--a-solid);
+  --accent-soft: var(--a-soft);
+  --accent-soft-hover: var(--a-soft-hover);
+  --accent-border: var(--a-border);
+  --focus-ring: var(--a-solid);
+
+  /* Status. Always paired with an icon or words: never colour alone. */
+  --success-text: #1b7a3e;
+  --success-soft: #e6f4ea;
+  --success-border: #9bd3ae;
+  --success-solid: #1b7a3e;
+  --on-success: #ffffff;
+  --danger-text: #b3261e;
+  --danger-soft: #fcebea;
+  --danger-border: #f0b4af;
+  --danger-solid: #b3261e;
+  --danger-solid-hover: #991f18;
+  --on-danger: #ffffff;
+  --warning-text: #855000;
+  --warning-soft: #fff4db;
+  --warning-border: #ebc46a;
+
+  /* The highlighter: one warm marker colour that means "look here". It is the same in
+     every accent, and is used for the tutor's attention, the line being traced and unread
+     marks. */
+  --highlight: #ffe08a;
+  --highlight-soft: #fff6d6;
+  --highlight-strong: #c98a00;
+  --highlight-text: #5c3f00;
+
+  /* Elevation: soft layered shadows in light. */
+  --shadow-panel: 0 1px 2px #1018280d, 0 1px 3px #10182814;
+  --shadow-raised: 0 2px 4px -2px #1018280f, 0 4px 10px -2px #1018281a;
+  --shadow-overlay: 0 4px 8px -4px #10182814, 0 14px 28px -6px #1018282e;
+  --shadow-dialog: 0 8px 16px -8px #1018281f, 0 28px 56px -12px #10182847;
+  --panel-border: #ffffff00;
+  --raised-border: var(--border-subtle);
+
+  /* Scrollbars. */
+  --scrollbar-thumb: #b9c0cc;
+  --scrollbar-thumb-hover: #8f98a8;
+
+  /* Code: the editor, the console and every code sample share these.
+     Chosen to stay apart for people who do not see red against green: each role differs in
+     lightness as well as hue, comments are italic and nothing depends on red versus green. */
+  --syntax-text: #1a1d24;
+  --syntax-keyword: #6d3fd1;
+  --syntax-builtin: #0b5fb8;
+  --syntax-function: #0b5fb8;
+  --syntax-string: #a14a00;
+  --syntax-number: #00735c;
+  --syntax-constant: #b0246e;
+  --syntax-comment: #5f6b7a;
+  --syntax-operator: #4a5262;
+
+  --editor-bg: #ffffff;
+  --editor-line-highlight: #f3f5f9;
+  --editor-selection: #2a5bd738;
+  --editor-selection-inactive: #2a5bd71f;
+  --editor-gutter-text: #7f8899;
+  --editor-gutter-active: #1a1d24;
+  --editor-cursor: #1a1d24;
+  --editor-indent-guide: #e3e6ec;
+  --editor-indent-guide-active: #b9c0cc;
+  --editor-bracket-match: #2a5bd72e;
+  --editor-bracket-1: #0b5fb8;
+  --editor-bracket-2: #b0246e;
+  --editor-bracket-3: #00735c;
+  --editor-error-line: #fcebea;
+  --editor-error-gutter: #b3261e;
+  --editor-flash-line: #ffe08a;
+  --editor-widget-bg: #ffffff;
+  --editor-widget-border: #cfd4dd;
+  --squiggle-error: #d6362c;
+  --squiggle-warning: #b27300;
+  --squiggle-info: #2a5bd7;
+
+  --console-bg: #fbfbfd;
+  --console-text: #1a1d24;
+  --console-stderr: #b3261e;
+  --console-meta: #5e687a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-    --colour-bg: #15171c;
-    --colour-surface: #1e2128;
-    --colour-border: #343a45;
-    --colour-text: #e7eaee;
-    --colour-text-muted: #a3acb8;
-    --colour-accent: #8fb0ff;
-    --colour-accent-text: #0e1320;
-    --colour-danger: #ffb4ab;
-    --colour-console-bg: #191c22;
-  }
-}
+/* ------------------------------------------------------------------ 2b. colour: dark theme
+   Designed on its own, not inverted: deep blue-slate rather than black, elevation shown by
+   lighter surfaces and hairline borders instead of shadows, and softer, lighter accents. */
 
-:root[data-theme='dark'] {
+[data-theme='dark'] {
   color-scheme: dark;
-  --colour-bg: #15171c;
-  --colour-surface: #1e2128;
-  --colour-border: #343a45;
-  --colour-text: #e7eaee;
-  --colour-text-muted: #a3acb8;
-  --colour-accent: #8fb0ff;
-  --colour-accent-text: #0e1320;
-  --colour-danger: #ffb4ab;
-  --colour-console-bg: #191c22;
+
+  --a-solid: #8fb1ff;
+  --a-hover: #a6c1ff;
+  --a-active: #bcd0ff;
+  --a-soft: #1c2a4d;
+  --a-soft-hover: #24355f;
+  --a-border: #3a5290;
+
+  --bg-app: #111318;
+  --surface-1: #1a1d24;
+  --surface-2: #22262f;
+  --surface-3: #2b303b;
+  --surface-raised: #242833;
+  --surface-inverse: #e8eaf0;
+  --scrim: #05070ab3;
+
+  --border-subtle: #2a2f3a;
+  --border: #3a404d;
+  --border-strong: #6f788a;
+
+  --text: #e8eaf0;
+  --text-secondary: #b6bcc8;
+  --text-muted: #98a0af;
+  --text-disabled: #5c6473;
+  --text-inverse: #1a1d24;
+
+  --on-accent: #0f1218;
+
+  --success-text: #6fd08c;
+  --success-soft: #16301f;
+  --success-border: #2f6b43;
+  --success-solid: #6fd08c;
+  --on-success: #0f1218;
+  --danger-text: #ff9b91;
+  --danger-soft: #3a1a18;
+  --danger-border: #7a332d;
+  --danger-solid: #ff9b91;
+  --danger-solid-hover: #ffb3ab;
+  --on-danger: #0f1218;
+  --warning-text: #f2c14e;
+  --warning-soft: #3a2e0f;
+  --warning-border: #6e5a1e;
+
+  --highlight: #5a4712;
+  --highlight-soft: #3a2e0f;
+  --highlight-strong: #f2c14e;
+  --highlight-text: #ffe6a3;
+
+  --shadow-panel: 0 0 0 #00000000;
+  --shadow-raised: 0 2px 6px #00000052;
+  --shadow-overlay: 0 10px 28px #00000080;
+  --shadow-dialog: 0 24px 64px #000000a6;
+  --panel-border: var(--border-subtle);
+  --raised-border: var(--border);
+
+  --scrollbar-thumb: #474e5c;
+  --scrollbar-thumb-hover: #6f788a;
+
+  --syntax-text: #e8eaf0;
+  --syntax-keyword: #b79cff;
+  --syntax-builtin: #6cb6ff;
+  --syntax-function: #6cb6ff;
+  --syntax-string: #f0a66b;
+  --syntax-number: #5fd4b7;
+  --syntax-constant: #ff8fc0;
+  --syntax-comment: #8b95a5;
+  --syntax-operator: #b6bcc8;
+
+  --editor-bg: #1a1d24;
+  --editor-line-highlight: #20242d;
+  --editor-selection: #8fb1ff47;
+  --editor-selection-inactive: #8fb1ff26;
+  --editor-gutter-text: #6f788a;
+  --editor-gutter-active: #e8eaf0;
+  --editor-cursor: #e8eaf0;
+  --editor-indent-guide: #2a2f3a;
+  --editor-indent-guide-active: #474e5c;
+  --editor-bracket-match: #8fb1ff40;
+  --editor-bracket-1: #6cb6ff;
+  --editor-bracket-2: #ff8fc0;
+  --editor-bracket-3: #5fd4b7;
+  --editor-error-line: #3a1a18;
+  --editor-error-gutter: #ff9b91;
+  --editor-flash-line: #5a4712;
+  --editor-widget-bg: #242833;
+  --editor-widget-border: #3a404d;
+  --squiggle-error: #ff7b6e;
+  --squiggle-warning: #f2c14e;
+  --squiggle-info: #8fb1ff;
+
+  --console-bg: #15181e;
+  --console-text: #e8eaf0;
+  --console-stderr: #ff9b91;
+  --console-meta: #98a0af;
+}
+
+/* ------------------------------------------------------------------ 3. accents
+   `Settings.accent` picks one. Each has a light and a dark set; blue's are the defaults
+   above. A solid carries --on-accent text at 4.5:1 or better and works as text on every
+   surface. */
+
+[data-accent='teal'] {
+  --a-solid: #0a7180;
+  --a-hover: #086270;
+  --a-active: #06525e;
+  --a-soft: #e0f3f5;
+  --a-soft-hover: #cdebef;
+  --a-border: #8fcbd3;
+}
+[data-theme='dark'][data-accent='teal'] {
+  --a-solid: #5ccfdd;
+  --a-hover: #7ad9e5;
+  --a-active: #97e3ec;
+  --a-soft: #12343a;
+  --a-soft-hover: #18424a;
+  --a-border: #256972;
+}
+
+[data-accent='green'] {
+  --a-solid: #1d7a3e;
+  --a-hover: #186a35;
+  --a-active: #13592c;
+  --a-soft: #e4f4e9;
+  --a-soft-hover: #d2ecda;
+  --a-border: #97cfaa;
+}
+[data-theme='dark'][data-accent='green'] {
+  --a-solid: #72d48f;
+  --a-hover: #8cdda4;
+  --a-active: #a5e6b8;
+  --a-soft: #17351f;
+  --a-soft-hover: #1e4428;
+  --a-border: #2f6e42;
+}
+
+[data-accent='purple'] {
+  --a-solid: #6941d9;
+  --a-hover: #5a35c4;
+  --a-active: #4c2bab;
+  --a-soft: #eee9fd;
+  --a-soft-hover: #e1d9fb;
+  --a-border: #bcaaf2;
+}
+[data-theme='dark'][data-accent='purple'] {
+  --a-solid: #b9a2ff;
+  --a-hover: #c8b6ff;
+  --a-active: #d6c9ff;
+  --a-soft: #2c2452;
+  --a-soft-hover: #372d66;
+  --a-border: #55459b;
+}
+
+[data-accent='pink'] {
+  --a-solid: #bf2569;
+  --a-hover: #a81e5b;
+  --a-active: #91184d;
+  --a-soft: #fce8f0;
+  --a-soft-hover: #f9d7e5;
+  --a-border: #eba3c2;
+}
+[data-theme='dark'][data-accent='pink'] {
+  --a-solid: #ff94be;
+  --a-hover: #ffabcc;
+  --a-active: #ffc1da;
+  --a-soft: #47192c;
+  --a-soft-hover: #582038;
+  --a-border: #8a3557;
+}
+
+[data-accent='orange'] {
+  --a-solid: #b24d08;
+  --a-hover: #9c4306;
+  --a-active: #853804;
+  --a-soft: #fdeddd;
+  --a-soft-hover: #fbdfc4;
+  --a-border: #e9b48a;
+}
+[data-theme='dark'][data-accent='orange'] {
+  --a-solid: #ffaa6b;
+  --a-hover: #ffbb88;
+  --a-active: #ffcba3;
+  --a-soft: #44260f;
+  --a-soft-hover: #553014;
+  --a-border: #855025;
+}
+
+/* ------------------------------------------------------------------ 4. high contrast
+   A modifier on top of either theme: text goes to the extremes, every panel and control
+   gets a clear outline, shadows go, the accent is pushed away from its background and the
+   focus ring is thicker. */
+
+[data-contrast='high'] {
+  --focus-width: 3px;
+  --border-width: 1px;
+
+  --bg-app: #ffffff;
+  --surface-2: #f2f3f6;
+  --surface-3: #e2e5eb;
+  --border-subtle: #7f8899;
+  --border: #4a5262;
+  --border-strong: #1a1d24;
+  --text: #000000;
+  --text-secondary: #1a1d24;
+  --text-muted: #2e3440;
+  --text-disabled: #5e687a;
+
+  --accent: color-mix(in srgb, var(--a-solid) 72%, #000000);
+  --accent-hover: color-mix(in srgb, var(--a-solid) 58%, #000000);
+  --accent-active: color-mix(in srgb, var(--a-solid) 46%, #000000);
+  --accent-text: color-mix(in srgb, var(--a-solid) 66%, #000000);
+  --accent-border: color-mix(in srgb, var(--a-solid) 72%, #000000);
+  --focus-ring: #000000;
+
+  --success-text: #0f5527;
+  --success-border: #0f5527;
+  --success-solid: #0f5527;
+  --danger-text: #8a120c;
+  --danger-border: #8a120c;
+  --danger-solid: #8a120c;
+  --warning-text: #5c3700;
+  --warning-border: #5c3700;
+  --highlight-strong: #7a5200;
+  --highlight-text: #3d2a00;
+
+  --shadow-panel: 0 0 0 #00000000;
+  --shadow-raised: 0 0 0 #00000000;
+  --panel-border: var(--border);
+  --raised-border: var(--border-strong);
+
+  --syntax-keyword: #4f25a8;
+  --syntax-builtin: #06427f;
+  --syntax-function: #06427f;
+  --syntax-string: #7a3600;
+  --syntax-number: #005141;
+  --syntax-constant: #85154f;
+  --syntax-comment: #3d4654;
+  --syntax-operator: #1a1d24;
+  --editor-gutter-text: #4a5262;
+  --editor-indent-guide: #b9c0cc;
+  --editor-indent-guide-active: #5e687a;
+  --console-bg: #ffffff;
+  --console-stderr: #8a120c;
+  --console-meta: #2e3440;
+  --scrollbar-thumb: #5e687a;
+  --scrollbar-thumb-hover: #1a1d24;
+}
+
+[data-theme='dark'][data-contrast='high'] {
+  --bg-app: #000000;
+  --surface-1: #0b0c0f;
+  --surface-2: #16181d;
+  --surface-3: #262a33;
+  --surface-raised: #16181d;
+  --border-subtle: #6f788a;
+  --border: #b6bcc8;
+  --border-strong: #ffffff;
+  --text: #ffffff;
+  --text-secondary: #e8eaf0;
+  --text-muted: #cdd2db;
+  --text-disabled: #98a0af;
+
+  --accent: color-mix(in srgb, var(--a-solid) 70%, #ffffff);
+  --accent-hover: color-mix(in srgb, var(--a-solid) 50%, #ffffff);
+  --accent-active: color-mix(in srgb, var(--a-solid) 35%, #ffffff);
+  --accent-text: color-mix(in srgb, var(--a-solid) 62%, #ffffff);
+  --accent-border: color-mix(in srgb, var(--a-solid) 70%, #ffffff);
+  --focus-ring: #ffffff;
+
+  --success-text: #a5e6b8;
+  --success-border: #a5e6b8;
+  --success-solid: #a5e6b8;
+  --danger-text: #ffc4bd;
+  --danger-border: #ffc4bd;
+  --danger-solid: #ffc4bd;
+  --warning-text: #ffdc85;
+  --warning-border: #ffdc85;
+  --highlight-strong: #ffdc85;
+  --highlight-text: #fff1c7;
+
+  --syntax-text: #ffffff;
+  --syntax-keyword: #d3c2ff;
+  --syntax-builtin: #a3d2ff;
+  --syntax-function: #a3d2ff;
+  --syntax-string: #ffc79c;
+  --syntax-number: #97ead4;
+  --syntax-constant: #ffb8d7;
+  --syntax-comment: #c1c8d4;
+  --syntax-operator: #e8eaf0;
+  --editor-bg: #0b0c0f;
+  --editor-line-highlight: #16181d;
+  --editor-gutter-text: #b6bcc8;
+  --editor-indent-guide: #474e5c;
+  --editor-indent-guide-active: #98a0af;
+  --editor-widget-bg: #16181d;
+  --editor-widget-border: #b6bcc8;
+  --console-bg: #000000;
+  --console-text: #ffffff;
+  --console-stderr: #ffc4bd;
+  --console-meta: #cdd2db;
+  --scrollbar-thumb: #98a0af;
+  --scrollbar-thumb-hover: #ffffff;
 }
