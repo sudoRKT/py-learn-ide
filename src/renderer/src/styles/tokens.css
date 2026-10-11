@@ -1,0 +1,47 @@
+/* Design tokens (SPEC section 11). Every colour in the interface comes from here.
+   PLACEHOLDER: the UI agent replaces this file with the full token set. */
+
+:root {
+  color-scheme: light;
+  --colour-bg: #f5f6f8;
+  --colour-surface: #ffffff;
+  --colour-border: #d9dde3;
+  --colour-text: #1c2026;
+  --colour-text-muted: #5b6470;
+  --colour-accent: #2f5fd0;
+  --colour-accent-text: #ffffff;
+  --colour-danger: #b3261e;
+  --colour-console-bg: #fbfbfc;
+  --radius: 10px;
+  --space: 12px;
+  --font-ui: system-ui, 'Segoe UI', sans-serif;
+  --font-code: 'Cascadia Code', Consolas, 'Courier New', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --colour-bg: #15171c;
+    --colour-surface: #1e2128;
+    --colour-border: #343a45;
+    --colour-text: #e7eaee;
+    --colour-text-muted: #a3acb8;
+    --colour-accent: #8fb0ff;
+    --colour-accent-text: #0e1320;
+    --colour-danger: #ffb4ab;
+    --colour-console-bg: #191c22;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --colour-bg: #15171c;
+  --colour-surface: #1e2128;
+  --colour-border: #343a45;
+  --colour-text: #e7eaee;
+  --colour-text-muted: #a3acb8;
+  --colour-accent: #8fb0ff;
+  --colour-accent-text: #0e1320;
+  --colour-danger: #ffb4ab;
+  --colour-console-bg: #191c22;
+}

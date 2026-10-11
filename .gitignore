@@ -1,0 +1,28 @@
+# dependencies and build output
+node_modules/
+out/
+dist/
+release/
+
+# run-time data written in development (see src/main/paths.ts)
+.devdata/
+
+# bundled binaries fetched by scripts/, never committed
+resources/python/
+resources/llama/
+resources/git/
+*.gguf
+
+# test output
+test-results/
+playwright-report/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

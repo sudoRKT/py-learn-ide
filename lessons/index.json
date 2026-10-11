@@ -1,0 +1,15 @@
+{
+  "stages": [
+    { "number": 1, "title": "First programs", "summary": "By the end you can write a program that asks questions and uses the answers." },
+    { "number": 2, "title": "Decisions", "summary": "By the end your programs react differently to different answers." },
+    { "number": 3, "title": "Loops", "summary": "By the end you can write games that keep going until someone wins." },
+    { "number": 4, "title": "Functions", "summary": "By the end your programs are built from small named parts." },
+    { "number": 5, "title": "Lists and text", "summary": "By the end you can hold and work with many things at once." },
+    { "number": 6, "title": "Dictionaries and data", "summary": "By the end you can model real information: records, counts and lookups." },
+    { "number": 7, "title": "Files and errors", "summary": "By the end your programs remember things between runs and survive bad input." },
+    { "number": 8, "title": "Classes and bigger programs", "summary": "By the end you can organise a program across several files." },
+    { "number": 9, "title": "Python in the real world", "summary": "By the end you can write the kind of script that does a real job." },
+    { "number": 10, "title": "Git and GitHub", "summary": "By the end your work has a history you can rewind, and you can read and publish projects." },
+    { "number": 11, "title": "Other people's code", "summary": "By the end you can read, fix and extend code you have never seen, and build a real project from nothing." }
+  ]
+}

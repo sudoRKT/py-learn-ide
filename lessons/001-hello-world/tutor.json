@@ -1,0 +1,32 @@
+[
+  {
+    "id": "print-misspelt",
+    "when": { "sourceRegex": "\\b(pritn|prnit|pirnt|prit|pint)\\s*\\(" },
+    "say": "Check the spelling of the first word on that line. Python only knows it when it is spelt exactly right.",
+    "sayAgain": "The word should be p, r, i, n, t. Compare yours letter by letter."
+  },
+  {
+    "id": "print-capital",
+    "when": { "sourceRegex": "\\b(Print|PRINT)\\s*\\(" },
+    "say": "Python cares about capital letters. Look at the first letter of that line.",
+    "sayAgain": "The instruction is written all in small letters."
+  },
+  {
+    "id": "missing-quotes",
+    "when": { "all": [{ "errorType": "NameError" }, { "not": { "sourceRegex": "\\b(pritn|prnit|pirnt|prit|pint|Print|PRINT)\\s*\\(" } }] },
+    "say": "Python thinks one of your words is a name it should already know. Text needs quotes around it.",
+    "sayAgain": "Look at the line in the error message. Is every piece of text inside a pair of quotes?"
+  },
+  {
+    "id": "unclosed",
+    "when": { "any": [{ "diagnosticCode": "unclosed-bracket" }, { "diagnosticCode": "unclosed-quote" }] },
+    "say": "Something on that line was opened but never closed. Count the brackets and the quotes.",
+    "sayAgain": "Every opening bracket needs a closing bracket, and quotes come in pairs."
+  },
+  {
+    "id": "no-comma",
+    "when": { "checkFailed": "make", "not": { "sourceRegex": "\"\\s*,\\s*\"" } },
+    "say": "One of your lines needs to print two things. What goes between two things inside the brackets?",
+    "sayAgain": "Look at line 2 of the example in the guide to see how two pieces of text share one print."
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "print": {
+    "label": "print()",
+    "names": ["print"],
+    "reminder": "print() shows something on the screen. Commas let you print several things at once.",
+    "example": "print(\"Hello\", \"there\")"
+  },
+  "string": {
+    "label": "text (strings)",
+    "reminder": "Text goes inside quotes. + joins two pieces of text and * repeats one.",
+    "example": "print(\"ha\" * 3)"
+  },
+  "number": {
+    "label": "numbers and sums",
+    "ast": ["Add", "Sub", "Mult", "Div", "FloorDiv", "Mod"],
+    "reminder": "Python does sums with + - * and /. // shares out whole things and % gives what is left over.",
+    "example": "print(50 // 6, 50 % 6)"
+  },
+  "variable": {
+    "label": "variables",
+    "ast": ["Assign"],
+    "reminder": "A variable is a name for a value. The value on the right goes into the name on the left.",
+    "example": "score = 0"
+  },
+  "input": {
+    "label": "input()",
+    "names": ["input"],
+    "reminder": "input() asks a question and waits. Whatever is typed comes back as text.",
+    "example": "name = input(\"What is your name? \")"
+  },
+  "comment": {
+    "label": "comments",
+    "reminder": "A line that starts with # is a note for people. Python skips it.",
+    "example": "# get the input"
+  },
+  "type-conversion": {
+    "label": "int(), float() and str()",
+    "names": ["int", "float", "str"],
+    "reminder": "int() turns text into a whole number, float() into a decimal and str() turns a number into text.",
+    "example": "age = int(input(\"Age? \"))"
+  },
+  "f-string": {
+    "label": "f-strings",
+    "ast": ["JoinedStr"],
+    "reminder": "Put f before the quotes, then put values inside curly brackets.",
+    "example": "print(f\"Hello, {name}\")"
+  }
+}

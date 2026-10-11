@@ -1,0 +1,10 @@
+{
+  // Playwright tests (tests/ui). They run in Node but hand callbacks to the browser
+  // (page.evaluate, addInitScript), so they need both the Node and the DOM types.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "include": ["tests/ui/**/*.ts", "src/renderer/src/env.d.ts", "playwright.config.ts"]
+}

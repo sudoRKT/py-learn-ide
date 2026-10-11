@@ -1,0 +1,13 @@
+{
+  "number": 1,
+  "title": "Hello, world",
+  "stage": 1,
+  "type": "learn",
+  "minutes": 15,
+  "newIdea": "print(), printing several things at once, running a program, the main panels",
+  "online": false,
+  "optional": false,
+  "starterFiles": ["starter.py"],
+  "introduces": ["print"],
+  "notYetTaught": "auto"
+}

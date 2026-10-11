@@ -1,0 +1,53 @@
+{
+  "name": "py-learn-ide",
+  "productName": "Py Learn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A desktop app for complete beginners to learn Python, with a live tutor.",
+  "author": "Py Learn",
+  "license": "UNLICENSED",
+  "main": "./out/main/index.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "dev:web": "vite --config vite.renderer.config.ts --mode mock",
+    "build": "electron-vite build",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web && npm run typecheck:uitests",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json",
+    "typecheck:uitests": "tsc --noEmit -p tsconfig.uitests.json",
+    "test": "vitest run",
+    "test:py": "python3 -m pytest python/tests -q",
+    "test:ui": "playwright test",
+    "smoke": "electron-vite build && node tests/electron-smoke.mjs",
+    "test:all": "npm run typecheck && npm test && npm run test:py && npm run test:ui && npm run smoke",
+    "pack": "electron-vite build && electron-builder --dir --config build/electron-builder.yml",
+    "dist": "electron-vite build && electron-builder --win nsis --config build/electron-builder.yml"
+  },
+  "devDependencies": {
+    "@monaco-editor/react": "4.7.0",
+    "@playwright/test": "1.56.1",
+    "@types/node": "24.19.2",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "5.2.0",
+    "dompurify": "3.4.16",
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "fuse.js": "7.5.0",
+    "lucide-react": "1.55.0",
+    "markdown-it": "15.0.2",
+    "monaco-editor": "0.57.0",
+    "nanoid": "6.0.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "7.0.2",
+    "vite": "7.3.7",
+    "vitest": "5.0.3",
+    "zod": "4.6.6",
+    "zustand": "5.0.15"
+  }
+}

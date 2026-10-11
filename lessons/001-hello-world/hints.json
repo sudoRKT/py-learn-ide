@@ -1,0 +1,10 @@
+{
+  "modify": {
+    "small": "Only the words inside the quotes need to change.",
+    "big": "On line 1, replace the word world with your name. On line 2, replace Pip with your name. Leave print, the brackets and the quotes where they are."
+  },
+  "make": {
+    "small": "Each line starts with print and an opening bracket, and ends with a closing bracket.",
+    "big": "Write print, then brackets, then your words in quotes inside the brackets. Do that three times on three lines. On one of them, put a comma after the closing quote and add a second piece of text in quotes."
+  }
+}

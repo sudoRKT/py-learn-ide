@@ -1,0 +1,54 @@
+[
+  {
+    "id": "predict",
+    "kind": "predict",
+    "title": "Predict",
+    "bodyMarkdown": "The editor has three lines of code in it. Read them. **Do not run them yet.**",
+    "question": {
+      "kind": "choice",
+      "prompt": "What will the second line show on the screen?",
+      "options": [
+        { "id": "a", "text": "My name is Pip", "feedback": "Yes. The comma puts a space between the two pieces of text." },
+        { "id": "b", "text": "My name isPip", "feedback": "Close. Look at what the comma does when you run it." },
+        { "id": "c", "text": "\"My name is\", \"Pip\"", "feedback": "The quotes and the comma are instructions to Python. They do not appear on the screen." }
+      ],
+      "correctId": "a"
+    }
+  },
+  {
+    "id": "run",
+    "kind": "run",
+    "title": "Run",
+    "bodyMarkdown": "Press **Run** and look at the console. Were you right?",
+    "question": { "kind": "none" }
+  },
+  {
+    "id": "investigate",
+    "kind": "investigate",
+    "title": "Investigate",
+    "bodyMarkdown": "Look at the first line of the program again.",
+    "question": {
+      "kind": "text",
+      "prompt": "Which word tells Python to show something on the screen?",
+      "accept": ["print", "print()"],
+      "caseSensitive": false,
+      "feedbackWrong": "It is the word at the very start of each line, just before the first bracket."
+    }
+  },
+  {
+    "id": "modify",
+    "kind": "modify",
+    "title": "Modify",
+    "bodyMarkdown": "Change the program so that it greets **you** instead of the world, and uses your name instead of Pip.",
+    "question": { "kind": "code", "prompt": "Change the first two lines, then press Check." },
+    "checkId": "modify"
+  },
+  {
+    "id": "make",
+    "kind": "make",
+    "title": "Make",
+    "bodyMarkdown": "Clear the editor and write a program of your own.\n\n- Print at least three lines.\n- On one of the lines, print two or more things with a comma between them.",
+    "question": { "kind": "code", "prompt": "Write your three lines, then press Check." },
+    "checkId": "make"
+  }
+]
