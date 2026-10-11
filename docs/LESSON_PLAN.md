@@ -61,7 +61,7 @@ By the end you can write a program that asks questions and uses the answers.
 | 6 | Text is not a number | Learn | `str`, `int`, `float`, converting, why `"5" + 5` fails | Ask for a birth year and print the age in 2040 |
 | 7 | f-strings | Learn | Values inside text, two decimal places, lining up columns | A bill splitter that prints a tidy receipt |
 | 8 | Fix it: your first error messages | Fix | Reading `SyntaxError`, `NameError` and `TypeError`, line numbers, unclosed quotes and brackets | Five broken programs repaired |
-| 9 | Project: Mad Libs | Build | Everything so far | Ask for six words and drop them into a three-part story |
+| 9 | Project: Fill-in story | Build | Everything so far | Ask for six words and drop them into a three-part story |
 
 ### Stage 2: Decisions (10 to 19)
 
@@ -189,9 +189,9 @@ By the end you can write the kind of script that does a real job.
 | # | Lesson | Type | New idea | You make |
 |---|---|---|---|---|
 | 80 | Asking the internet | Learn | What an API is, `requests` (an add-on package that ships with the app), `requests.get()` with `params`, `.json()` and `.text` | Today's temperature for a town picked from a list |
-| 81 | Digging through JSON | Learn | Finding what you need in a big response | A Pokémon's types, height and first five moves, from a saved response |
+| 81 | Digging through JSON | Learn | Finding what you need in a big response | Six facts pulled out of a big saved response |
 | 82 | When the internet lets you down | Learn | Status codes, timeouts, `raise_for_status()`, catching network errors | Lesson 80 made to fail politely when the connection drops |
-| 83 | Don't ask twice | Learn | Keeping a copy on disk and using it while it is fresh | A Pokémon lookup that downloads each one only once |
+| 83 | Don't ask twice | Learn | Keeping a copy on disk and using it while it is fresh | A lookup that fetches each item only once |
 | 84 | Fix it: when real data bites | Fix | Missing fields, `None` in JSON, text where a number should be, a file that isn't there | Five broken scripts repaired |
 | 85 | Settings and secrets | Learn | Constants at the top, environment variables, why keys never go in code | A program with a key pasted into it, cleaned up |
 | 86 | Command-line programs | Learn | `argparse`, `--help` | A currency converter run as `convert.py 100 GBP EUR` |
@@ -219,11 +219,11 @@ By the end you can read, fix and extend code you have never seen, and build a re
 
 ## The projects
 
-Eight of the 16 builds come straight from projects that beginner books and courses recommend, limited to those that run in a text console. One (Report maker) is modelled on a book's projects and seven are our own designs. Arcade games that need a graphics window (Snake, Pong, Tetris) are on most beginner project lists and are left out for that reason.
+Eight of the 16 builds come straight from projects that beginner books and courses recommend, limited to those that run in a text console. One (Report maker) is modelled on a book's projects and seven are our own designs. Arcade games that need a graphics window are on most beginner project lists and are left out for that reason.
 
 | Lesson | Project | Kind | Recommended by |
 |---|---|---|---|
-| 9 | Mad Libs | Game | freeCodeCamp |
+| 9 | Fill-in story | Game | freeCodeCamp |
 | 19, 29 | Rock, Paper, Scissors | Game | Big Book of Small Python Projects, freeCodeCamp, Real Python, JetBrains Academy |
 | 23 | Guess the Number | Game | Big Book, Invent Your Own Computer Games, freeCodeCamp |
 | 38 | The Arcade | Game | Own design: ties the first three games together |
@@ -257,11 +257,10 @@ None of them needs an account or a key, going by their own websites. Open-Meteo 
 | Lesson | Service | Used for | Notes |
 |---|---|---|---|
 | 80, 82, 89, 90 | Open-Meteo | Weather | It wants map coordinates, so the lesson supplies them for a list of towns |
-| 81, 83 | PokeAPI | Pokémon data | States that no sign-up is needed. Asks users to keep their own copy of what they download, which is what lesson 83 teaches |
 | 86, 87 | Frankfurter | Exchange rates | States no sign-up and no usage cap |
 | 97 to 100 | A practice register hosted in the py-learn-ide repo on GitHub | Register Watch | A made-up CSV list that is downloaded like a real one. Two older snapshots ship with the lesson, so there are always changes to find |
 
-Every lesson that uses the internet ships with a saved copy of the response, so the checks work offline. If the app is ever sold, Open-Meteo and the Pokémon material would need replacing.
+Every lesson that uses the internet ships with a saved copy of the response, so the checks work offline.
 
 ## How lessons plug into the IDE
 
@@ -406,7 +405,6 @@ Projects:
 
 Web services:
 - Open-Meteo: https://open-meteo.com/en/docs
-- PokeAPI: https://pokeapi.co/docs/v2
 - Frankfurter: https://frankfurter.dev/
 
 Teaching methods and tutor design:
